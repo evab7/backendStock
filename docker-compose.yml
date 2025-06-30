@@ -1,0 +1,61 @@
+services:
+  web:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      # https://stackoverflow.com/a/37322795
+      SPRING_PROFILES_ACTIVE: development
+    links:
+      - "db:database"
+    depends_on:
+      db:
+        condition: service_healthy
+  # https://stackoverflow.com/a/76258060
+
+  db:
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "Vodenikonj1!"
+      MYSQL_DATABASE: "Stock_project"
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost"]
+      timeout: 5s
+      interval: 10s
+      retries: 4
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  mysql_data:
+#
+#image: gradle:8.2.0-jdk17-jammy
+#
+#variables:
+#  SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Defines the location of the analysis task cache
+#  GIT_DEPTH: "0"  # Tells git to fetch all the branches of the project, required by the analysis task
+#
+#stages:
+#  - build-sonar
+#
+#
+#build-sonar:
+#  stage: build-sonar
+#
+#
+#  cache:
+#    policy: pull-push
+#    key: "sonar-cache-$CI_COMMIT_REF_SLUG"
+#    paths:
+#      - "${SONAR_USER_HOME}/cache"
+#      - sonar-scanner/
+
+ # script: gradle sonar
+#  allow_failure: true
+ # rules:
+  ## - if: $CI_COMMIT_BRANCH == 'master'
+    #- if: $CI_COMMIT_BRANCH == 'main'
+    # if: $CI_COMMIT_BRANCH == 'develop'

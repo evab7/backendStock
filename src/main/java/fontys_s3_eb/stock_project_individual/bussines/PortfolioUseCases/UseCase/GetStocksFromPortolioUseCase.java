@@ -1,0 +1,8 @@
+package fontys_s3_eb.stock_project_individual.bussines.PortfolioUseCases.UseCase;
+
+import fontys_s3_eb.stock_project_individual.domain.PortfolioPackage.GetPortfolioStockRequest;
+import fontys_s3_eb.stock_project_individual.domain.PortfolioPackage.GetPortfolioStockResponse;
+
+public interface GetStocksFromPortolioUseCase {
+    GetPortfolioStockResponse getStocksFromPortolio(GetPortfolioStockRequest request);
+}

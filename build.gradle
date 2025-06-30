@@ -1,0 +1,83 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.3.3'
+	id 'io.spring.dependency-management' version '1.1.6'
+	id "org.sonarqube" version "6.0.1.5171"
+	id 'jacoco'
+
+}
+sonar {
+	properties {
+		property "sonar.projectKey", "I505282_stock_application_individual_35912c68-16a1-4515-952e-7a58f5421d04"
+		property "sonar.projectName", "stock_application_individual"
+		property "sonar.token", "sqp_83a7555acbb32ecc918983ab45d920dec65cad34"
+		property "sonar.qualitygate.wait", true
+
+
+	}
+}
+
+group = 'fontys_s3_eb'
+version = '0.0.1-SNAPSHOT'
+
+jacocoTestReport {
+	dependsOn test
+	reports {
+		xml.required.set(true) // Enable XML report
+		html.required.set(true) // Enable HTML report
+	}
+}
+
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+
+
+}
+
+dependencies {
+	implementation 'org.flywaydb:flyway-core'
+	implementation 'org.flywaydb:flyway-mysql'
+	implementation 'mysql:mysql-connector-java:8.0.33'
+	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+	compileOnly 'org.projectlombok:lombok'
+	testRuntimeOnly 'com.h2database:h2'
+	runtimeOnly 'com.mysql:mysql-connector-j'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	implementation 'jakarta.validation:jakarta.validation-api:3.0.2'
+	implementation 'org.hibernate.validator:hibernate-validator:7.0.4.Final'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'
+	testImplementation 'org.springframework.security:spring-security-test'
+
+	implementation 'io.github.cdimascio:dotenv-java:3.0.0'
+	implementation 'org.json:json:20210307'
+
+
+}
+
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
